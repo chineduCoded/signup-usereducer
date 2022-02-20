@@ -14,7 +14,7 @@ const initialState = {
   name: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  passwordRepeat: '',
   termsAccepted: false,
 }
 
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
 
 const validateState = (state) => {
   return (
-    state.password === state.confirmPassword &&
+    state.password === state.passwordRepeat &&
     state.termsAccepted &&
     state.password.length > 3
   )
@@ -43,8 +43,10 @@ export const SignUp = () => {
     }
     dispatch(action)
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    alert(`Hey ${state.name}, you have submitted successfully`)
   }
   return (
     <Container>
@@ -71,7 +73,7 @@ export const SignUp = () => {
           />
           <FormInput
             type="password"
-            name="confirmPassword"
+            name="passwordRepeat"
             placeholder="Confirm Password"
             onChange={handleChange}
           />
@@ -84,6 +86,7 @@ export const SignUp = () => {
             Accept Terms of Use!
           </Label>
           <Button
+            disabled={!validateState(state)}
             className={!validateState(state) ? 'disabled' : null}
             type="submit"
           >
